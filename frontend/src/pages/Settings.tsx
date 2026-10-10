@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Building2, ClipboardList, Pencil, Plus, Search, Trash2, Users } from "lucide-react";
+import { Building2, ClipboardList, Pencil, Plus, Plug, Search, Trash2, Users } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import XeroPanel from "@/components/XeroPanel";
 import { useList, useMe, useRemove, useSave } from "@/lib/hooks";
 import type { User, UserIn } from "@/lib/types";
 import { COMPANY } from "@/components/DocumentPreview";
@@ -17,6 +19,7 @@ const BLANK: UserIn = { name: "", email: "", role: "technician", title: "Technic
 
 export default function Settings() {
   const me = useMe().data;
+  const [params] = useSearchParams();
   const { data: users = [] } = useList<User>("/users");
   const [q, setQ] = useState("");
   const [editing, setEditing] = useState<User | "new" | null>(null);
@@ -36,11 +39,12 @@ export default function Settings() {
   return (
     <div className="mx-auto max-w-[1400px]">
       <PageHeader title="Settings" subtitle="Manage your team, job options, forms and company details." />
-      <Tabs defaultValue="team">
+      <Tabs defaultValue={params.get("tab") ?? "team"}>
         <TabsList className="mb-4">
           <TabsTrigger value="team" data-testid="settings-tab-team"><Users className="size-4" />Team & users</TabsTrigger>
           <TabsTrigger value="jobs" data-testid="settings-tab-jobs"><ClipboardList className="size-4" />Job & form settings</TabsTrigger>
           <TabsTrigger value="company" data-testid="settings-tab-company"><Building2 className="size-4" />Company</TabsTrigger>
+          <TabsTrigger value="integrations" data-testid="settings-tab-integrations"><Plug className="size-4" />Integrations</TabsTrigger>
         </TabsList>
         <TabsContent value="team">
           <Panel title={`Team members (${users.length})`} actions={me?.role === "admin" && <Button size="sm" onClick={() => setEditing("new")} data-testid="add-user-button"><Plus className="size-4" />Add team member</Button>}>
@@ -74,6 +78,7 @@ export default function Settings() {
             </Panel>
           ))}
         </TabsContent>
+        <TabsContent value="integrations"><XeroPanel /></TabsContent>
         <TabsContent value="company">
           <Panel title="Company details">
             <div className="grid gap-4 sm:grid-cols-2">

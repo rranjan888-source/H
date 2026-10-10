@@ -1,10 +1,12 @@
 """Quotes, sales orders and invoices (one `documents` collection keyed by `kind`), plus the
 public quote-acceptance flow that auto-creates a job."""
 
+import logging
 import os
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 
+from lib import xero
 from lib.auth import get_current_user
 from lib.common import compute_totals, find_one, log_activity, name_of, next_number
 from lib.dates import today_iso
@@ -15,6 +17,7 @@ from models.crm import (
 )
 from routers.crud import crud_router
 
+logger = logging.getLogger(__name__)
 KIND_PREFIX = {"quote": "Q", "sales_order": "SO", "invoice": "INV"}
 KIND_LABEL = {"quote": "Quote", "sales_order": "Sales order", "invoice": "Invoice"}
 DEFAULT_CHECKLIST = ["Arrived on site", "Safety check", "Work completed", "Test and commission", "Customer sign-off"]
@@ -144,7 +147,12 @@ async def send_invoice(id: str):
         upd["status"] = "Sent"
     await db.documents.update_one({"id": id}, {"$set": upd})
     await log_activity(f"Invoice {inv['number']} sent to {cust['email']}")
-    return Document(**{**inv, **upd})
+    if xero.configured() and await xero.connection():  # auto-sync sent invoices; never block the send
+        try:
+            await xero.push_invoice({**inv, **upd})
+        except HTTPException as e:
+            logger.warning("Auto Xero sync failed for %s: %s", inv["number"], e.detail)
+    return await _get_doc(id, "invoice")
 
 
 @router.post("/quotes/{id}/convert", response_model=Document)

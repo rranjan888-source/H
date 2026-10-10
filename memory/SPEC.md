@@ -39,3 +39,11 @@ Totals computed server-side: subtotal, gst_total (15%), total.
 - Invoices INV-3008..3014 + historic paid invoices for 12 months.
 - Jobs: ~13 scheduled today/tomorrow across technicians, 5 Unscheduled (J-2030..J-2034), 20 completed historic.
 - 14 assets, 10 forms/certificates, timesheets for current week, 4 leave entries.
+
+## Xero integration (backend/lib/xero.py, routers/xero.py, frontend components/XeroPanel.tsx)
+- Settings › Integrations. Needs XERO_CLIENT_ID / XERO_CLIENT_SECRET in backend/.env (currently EMPTY → panel shows setup steps; all /api/xero/* sync calls return 503).
+- Redirect URI: <PUBLIC_APP_URL>/api/xero/callback. Scopes: openid profile email offline_access accounting.contacts accounting.invoices.
+- Tokens stored in `xero_connection` (key=primary), auto-refreshed with rotation.
+- Sync: CRM customers → Xero Contacts (linked by name if exists), Sent/Overdue invoices → ACCREC AUTHORISED (TaxType OUTPUT2, AccountCode XERO_SALES_ACCOUNT=200); Xero payments pulled back (PAID → CRM Paid); Xero contacts imported as customers.
+- Auto: invoice "Send" pushes to Xero when connected (failure never blocks the email). Manual: "Sync now" (Settings), "Sync to Xero" on invoice + customer detail (only visible when connected).
+- Fields: Customer.xero_contact_id/xero_synced_at; Document.xero_invoice_id/xero_status/xero_synced_at/xero_error.

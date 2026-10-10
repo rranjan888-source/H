@@ -7,6 +7,7 @@ import { fmtDate, money } from "@/lib/format";
 import { EntityDialog, type FieldDef } from "@/components/EntityDialog";
 import { Empty, Field, KpiCard, PageHeader, Panel } from "@/components/Page";
 import { StatusBadge } from "@/components/StatusBadge";
+import { XeroBadge, XeroSyncButton } from "@/components/XeroPanel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -90,7 +91,8 @@ export default function Customers() {
               <Button size="icon-sm" variant="outline" aria-label="Edit customer" onClick={() => setEditing(sel)} data-testid="edit-customer-button"><Pencil className="size-4" /></Button>
               <Button size="icon-sm" variant="outline" aria-label="Delete customer" onClick={() => { if (confirm(`Delete ${sel.name}?`)) remove.mutate(sel.id, { onSuccess: () => setSelected(null) }); }} data-testid="delete-customer-button"><Trash2 className="size-4 text-red-700" /></Button>
             </div>}>
-              <div className="mb-4 flex flex-wrap gap-2"><StatusBadge status={sel.type} /><StatusBadge status={sel.status} /></div>
+              <div className="mb-4 flex flex-wrap items-center gap-2"><StatusBadge status={sel.type} /><StatusBadge status={sel.status} /><XeroBadge id={sel.xero_contact_id} />
+                <span className="ml-auto"><XeroSyncButton path={`/xero/customers/${sel.id}/sync`} label="Customer" synced={!!sel.xero_contact_id} testid="xero-sync-customer-button" /></span></div>
               <div className="space-y-2 text-sm text-slate-700">
                 <p className="flex items-center gap-2"><MapPin className="size-4 text-orange-600" />{sel.address}, {sel.city}</p>
                 <p className="flex items-center gap-2"><Phone className="size-4 text-orange-600" />{sel.phone || "—"} · {sel.contact_name}</p>

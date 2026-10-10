@@ -11,6 +11,7 @@ import { DocumentPreview } from "@/components/DocumentPreview";
 import { SelectField } from "@/components/EntityDialog";
 import { Panel } from "@/components/Page";
 import { StatusBadge } from "@/components/StatusBadge";
+import { XeroBadge, XeroSyncButton } from "@/components/XeroPanel";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -100,6 +101,7 @@ export default function DocumentDetail({ kind }: { kind: DocKind }) {
             <h1 data-testid="page-title" className="flex items-center gap-3 text-2xl font-bold text-slate-900">
               {isNew ? `New ${meta.single}` : `${meta.single} ${doc?.number}`}
               {!isNew && doc && <StatusBadge status={doc.status} testid="document-status-badge" />}
+              {!isNew && doc && kind === "invoice" && <XeroBadge id={doc.xero_invoice_id} status={doc.xero_status} error={doc.xero_error} />}
             </h1>
           </div>
         </div>
@@ -120,6 +122,7 @@ export default function DocumentDetail({ kind }: { kind: DocKind }) {
           {!isNew && doc && kind === "invoice" && (
             <>
               <Button variant="outline" size="sm" onClick={() => send.mutate()} disabled={send.isPending} data-testid="send-invoice-button"><Mail className="size-4" />{send.isPending ? "Sending…" : doc.sent_at ? "Resend" : "Send invoice"}</Button>
+              {doc.status !== "Draft" && <XeroSyncButton path={`/xero/invoices/${id}/sync`} label="Invoice" synced={!!doc.xero_invoice_id} testid="xero-sync-invoice-button" />}
               {doc.status !== "Paid" && <Button variant="outline" size="sm" onClick={() => { setPayAmount(String((doc.total - doc.amount_paid).toFixed(2))); setPayOpen(true); }} data-testid="record-payment-button"><CreditCard className="size-4" />Record payment</Button>}
             </>
           )}

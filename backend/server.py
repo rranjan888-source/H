@@ -60,10 +60,10 @@ async def get_status_checks():
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
 
-from routers import auth, crud, documents, jobs, stats  # noqa: E402
+from routers import auth, crud, documents, jobs, stats, xero  # noqa: E402
 
 api_router.include_router(auth.router)
-for r in [*documents.ALL, *jobs.ALL, *crud.ALL, stats.router]:
+for r in [xero.router, *documents.ALL, *jobs.ALL, *crud.ALL, stats.router]:
     api_router.include_router(r)
 
 # Include the router in the main app

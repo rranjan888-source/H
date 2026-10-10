@@ -15,7 +15,7 @@ export interface CustomerIn {
   name: string; type: string; contact_name: string; phone: string; email: string; address: string; city: string;
   status: string; gst_number: string; payment_terms: string; credit_limit: number; website: string; notes: string;
 }
-export interface Customer extends CustomerIn { id: string; created_at: string }
+export interface Customer extends CustomerIn { id: string; xero_contact_id: string; xero_synced_at: string | null; created_at: string }
 
 export interface LeadIn {
   name: string; contact_name: string; phone: string; email: string; city: string; source: string; service: string;
@@ -35,7 +35,8 @@ export interface Doc extends DocumentIn {
   id: string; kind: DocKind; number: string; customer_name: string; customer_email: string; assigned_name: string;
   subtotal: number; gst_total: number; total: number; amount_paid: number; sent_at: string | null;
   accepted_at: string | null; accepted_by: string; paid_at: string | null; quote_id: string; quote_number: string;
-  sales_order_id: string; sales_order_number: string; job_id: string; job_number: string; created_at: string;
+  sales_order_id: string; sales_order_number: string; job_id: string; job_number: string;
+  xero_invoice_id: string; xero_status: string; xero_synced_at: string | null; xero_error: string; created_at: string;
 }
 export interface Company { name: string; address: string; phone: string; email: string; gst_number: string }
 export interface PublicQuote { quote: Doc; customer: Customer; company: Company }
@@ -88,3 +89,13 @@ export interface Reports {
   revenue_by_customer_type: NameValue[]; top_customers: NameValue[]; team_productivity: NameValue[];
   outstanding: Doc[];
 }
+
+export interface XeroSyncResult {
+  imported_customers: number; pushed_customers: number; pushed_invoices: number; invoice_errors: number;
+  payments_updated: number; at: string;
+}
+export interface XeroStatus {
+  configured: boolean; connected: boolean; tenant_name: string; connected_at: string | null; redirect_uri: string;
+  last_sync: XeroSyncResult | null;
+}
+export interface XeroConnectUrl { url: string }

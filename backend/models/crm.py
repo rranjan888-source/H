@@ -68,6 +68,8 @@ class CustomerIn(BaseModel):
 
 class Customer(CustomerIn):
     id: str = Field(default_factory=_id)
+    xero_contact_id: str = ""
+    xero_synced_at: Optional[str] = None
     created_at: str = Field(default_factory=now_iso)
 
 
@@ -136,6 +138,10 @@ class Document(DocumentIn):
     sales_order_number: str = ""
     job_id: str = ""
     job_number: str = ""
+    xero_invoice_id: str = ""
+    xero_status: str = ""
+    xero_synced_at: Optional[str] = None
+    xero_error: str = ""
     created_at: str = Field(default_factory=now_iso)
 
 
@@ -340,3 +346,26 @@ class Reports(BaseModel):
     top_customers: list[NameValue]
     team_productivity: list[NameValue]
     outstanding: list[Document]
+
+
+# ---------- Xero ----------
+class XeroSyncResult(BaseModel):
+    imported_customers: int = 0
+    pushed_customers: int = 0
+    pushed_invoices: int = 0
+    invoice_errors: int = 0
+    payments_updated: int = 0
+    at: str = ""
+
+
+class XeroStatus(BaseModel):
+    configured: bool
+    connected: bool
+    tenant_name: str = ""
+    connected_at: Optional[str] = None
+    redirect_uri: str
+    last_sync: Optional[XeroSyncResult] = None
+
+
+class XeroConnectUrl(BaseModel):
+    url: str
