@@ -1,0 +1,199 @@
+{
+  "theme": {
+    "mode": "light",
+    "style": "clean trade field-service CRM",
+    "brand_name": "GASCRAFT",
+    "tagline": "Field Operations & Gas Engineering Management"
+  },
+  "typography": {
+    "font_family_heading": "Outfit Variable, sans-serif",
+    "font_family_body": "Plus Jakarta Sans Variable, sans-serif",
+    "font_family_mono": "JetBrains Mono Variable, monospace",
+    "font_import": "@import \"@fontsource-variable/outfit\";\n@import \"@fontsource-variable/plus-jakarta-sans\";\n@import \"@fontsource-variable/jetbrains-mono\";",
+    "scale_px": {
+      "display": 48,
+      "h1": 36,
+      "h2": 28,
+      "h3": 22,
+      "body": 15,
+      "caption": 13
+    },
+    "rules": {
+      "headings": "font-heading font-bold tracking-tight text-slate-900",
+      "subheadings": "font-sans font-medium text-slate-600",
+      "body": "font-sans text-[15px] leading-relaxed text-slate-700",
+      "numbers_and_kpis": "font-heading font-extrabold tracking-tight tabular-nums",
+      "document_codes": "font-mono text-[13px] font-semibold tracking-wide"
+    }
+  },
+  "colors": {
+    "surfaces": [
+      {
+        "name": "page",
+        "kind": "solid",
+        "bg": "#F8FAFC",
+        "on_bg": "#0F172A",
+        "on_bg_muted": "#475569",
+        "roles": {
+          "link": "#D95D1E",
+          "error": "#B91C1C",
+          "success": "#15803D"
+        }
+      },
+      {
+        "name": "sidebar",
+        "kind": "solid",
+        "bg": "#0F1A2C",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#94A3B8",
+        "roles": {
+          "active_bg": "#1E2C44",
+          "active_text": "#F97316",
+          "active_border": "#F97316",
+          "badge_bg": "#F97316",
+          "badge_text": "#FFFFFF"
+        }
+      },
+      {
+        "name": "panel",
+        "kind": "solid",
+        "bg": "#FFFFFF",
+        "on_bg": "#0F172A",
+        "on_bg_muted": "#64748B",
+        "roles": {
+          "border": "#E2E8F0",
+          "hover_bg": "#F1F5F9"
+        }
+      },
+      {
+        "name": "document_preview",
+        "kind": "solid",
+        "bg": "#F1F5F9",
+        "on_bg": "#0F172A",
+        "on_bg_muted": "#475569",
+        "roles": {
+          "paper_bg": "#FFFFFF",
+          "paper_border": "#CBD5E1",
+          "stamp_text": "#0F172A"
+        }
+      },
+      {
+        "name": "status_scheduled",
+        "kind": "solid",
+        "bg": "#EFF6FF",
+        "on_bg": "#1D4ED8",
+        "on_bg_muted": "#1E40AF"
+      },
+      {
+        "name": "status_in_progress",
+        "kind": "solid",
+        "bg": "#FFF7ED",
+        "on_bg": "#C2410C",
+        "on_bg_muted": "#9A3412"
+      },
+      {
+        "name": "status_pending",
+        "kind": "solid",
+        "bg": "#FEFCE8",
+        "on_bg": "#A16207",
+        "on_bg_muted": "#854D0E"
+      },
+      {
+        "name": "status_completed",
+        "kind": "solid",
+        "bg": "#F0FDF4",
+        "on_bg": "#15803D",
+        "on_bg_muted": "#166534"
+      },
+      {
+        "name": "status_draft",
+        "kind": "solid",
+        "bg": "#F1F5F9",
+        "on_bg": "#475569",
+        "on_bg_muted": "#334155"
+      },
+      {
+        "name": "public_quote_banner",
+        "kind": "solid",
+        "bg": "#0F1A2C",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#CBD5E1"
+      }
+    ],
+    "accent": "#EA580C",
+    "on_accent": "#FFFFFF",
+    "secondary_accent": "#0284C7",
+    "on_secondary_accent": "#FFFFFF"
+  },
+  "entry_surfaces": {
+    "/": "dark navy sidebar left, light gray main content with KPI grid and today's schedule calendar",
+    "/login": "split branded authentication — deep navy brand identity panel left with GasCraft logo, clean login card right",
+    "/public/quote/:id": "clean client approval portal with navy branded header, interactive quote document preview, and 1-click accept & sign modal"
+  },
+  "layout_architecture": {
+    "shell": "Full-height application with dark navy left sidebar (w-64 desktop, collapsable on tablet/mobile), top header with quick-action buttons, global search, technician switch/role toggle, and notification bell",
+    "navigation_modules": [
+      { "id": "dashboard", "label": "Dashboard", "icon": "LayoutDashboard", "path": "/" },
+      { "id": "leads", "label": "Leads", "icon": "Target", "path": "/leads" },
+      { "id": "quotes", "label": "Quotes", "icon": "FileText", "path": "/quotes" },
+      { "id": "sales-orders", "label": "Sales Orders", "icon": "ShoppingCart", "path": "/sales-orders" },
+      { "id": "schedule", "label": "Jobs & Schedule", "icon": "Calendar", "path": "/schedule" },
+      { "id": "timesheets", "label": "People & Timesheets", "icon": "Clock", "path": "/timesheets" },
+      { "id": "invoices", "label": "Billing & Invoices", "icon": "Receipt", "path": "/invoices" },
+      { "id": "assets", "label": "Assets & Tools", "icon": "Wrench", "path": "/assets" },
+      { "id": "customers", "label": "Customers", "icon": "Users", "path": "/customers" },
+      { "id": "certificates", "label": "Certificates & Safety", "icon": "ShieldCheck", "path": "/certificates" },
+      { "id": "reports", "label": "Reports & Analytics", "icon": "BarChart3", "path": "/reports" },
+      { "id": "tech-view", "label": "Technician Mobile App", "icon": "Smartphone", "path": "/tech" },
+      { "id": "settings", "label": "Settings", "icon": "Settings", "path": "/settings" }
+    ],
+    "two_column_split": {
+      "description": "Used in Quotes, Sales Orders, and Invoices: Left panel contains editable line items, customer details, GST 15% calculation, and status stepper; Right panel contains realistic, printable A4 document preview",
+      "split_ratio": "lg:grid-cols-12 (Left: 7 cols, Right: 5 cols)"
+    },
+    "schedule_view": {
+      "description": "Calendar grid with technician columns (e.g. Mike Ross, Liam Vance, Sarah Chen), time slots 07:00 to 18:00, drag-and-drop or click to assign, with side drawer of unscheduled jobs."
+    }
+  },
+  "key_components": {
+    "kpi_card": {
+      "path": "frontend/src/components/dashboard/KpiCard.tsx",
+      "style": "bg-white rounded-xl border border-slate-200/80 p-5 shadow-xs hover:border-slate-300 transition-colors"
+    },
+    "status_badge": {
+      "path": "frontend/src/components/common/StatusBadge.tsx",
+      "variants": ["Draft", "Sent", "Accepted", "Converted", "Scheduled", "In Progress", "Pending", "Completed", "Paid", "Overdue"]
+    },
+    "document_preview_sheet": {
+      "path": "frontend/src/components/documents/DocumentPreview.tsx",
+      "features": ["GASCRAFT branding", "NZ GST 15% breakdown", "Gas Safety Certification badge", "Terms & conditions", "Acceptance signature block", "Print/PDF export button"]
+    },
+    "technician_mobile_view": {
+      "path": "frontend/src/pages/TechnicianMobile.tsx",
+      "features": ["Today's Job Queue", "Job checklist & photo capture mock", "Timesheet Clock In / Out toggle", "Van stock & gas equipment audit", "Instant Gas Safety Certificate generator"]
+    },
+    "gas_safety_certificate": {
+      "path": "frontend/src/components/certificates/GasCertificateModal.tsx",
+      "nz_standards": ["NZS 5261 / AS/NZS 5601 compliance", "Gas pressure test result (kPa)", "Flue flow & spillage test", "Practitioner Gasfitting License #", "Customer sign-off"]
+    }
+  },
+  "motion_and_interactions": {
+    "transitions": "transition-colors duration-150 ease-out, transition-opacity duration-200",
+    "modals": "Fade & scale in (opacity 0 -> 1, scale 0.98 -> 1)",
+    "tabs": "Smooth underline sliding or pill highlight transition",
+    "toasts": "Sonner bottom-right alerts for actions like 'Quote Sent', 'Job Scheduled', 'Certificate Issued', 'Payment Recorded'"
+  },
+  "accessibility": {
+    "focus_ring": "focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none",
+    "contrast_check": "All text tokens exceed WCAG AA 4.5:1 ratio against light slate backgrounds and dark navy panels",
+    "aria_labels": "All action buttons and icon triggers include explicit aria-label and descriptive data-testid attributes"
+  },
+  "instructions_to_main_agent": [
+    "Follow the exact visual identity from the CRM - Concept Gas Craft PDF: Dark navy sidebar (#0F1A2C), clean white cards (#FFFFFF) on slate page (#F8FAFC), with safety orange accent (#EA580C) and crisp status badges.",
+    "Implement all key CRM modules: Dashboard, Leads, Quotes with live document preview & GST 15%, Sales Orders, Jobs & Schedule with technician columns, Timesheets with Clock-in/out, Billing/Invoices, Assets with WOF/Rego/Calibration tracker, Customers, Reports with Recharts, Gas Safety Certificates, and Technician Mobile View.",
+    "Include a public customer quote acceptance route (/public/quote/:id) where a client can review line items, click 'Accept Quote', sign digitally, and automatically trigger Job creation.",
+    "Pre-seed comprehensive realistic NZ trade data: residential & commercial gas boiler installs, heat pumps, cylinder replacements, gas certifications with NZ practitioner licenses, Auckland/Wellington service addresses, and vehicle/tool calibration expiry alerts.",
+    "Ensure every interactive button, input, tab, and row has a descriptive data-testid for end-to-end reliability.",
+    "Keep styling modular, using Tailwind v4 utility classes and Lucide icons without generic AI slop."
+  ]
+}
